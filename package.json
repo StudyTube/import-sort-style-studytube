@@ -9,10 +9,11 @@
     "build": "tsc -p src",
     "build:watch": "tsc -p src -w"
   },
-  "author": "Yuriy Kuzin <yuriy.open@gmail.com>",
+  "author": "Yuriy Kuzin <yuriy.open@gmail.com> from studytube.nl",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "10.3.5",
+    "import-sort-parser": "5.0.0",
     "import-sort-style": "5.0.0",
     "ts-node": "7.0.0",
     "tslint": "5.10.0",
