@@ -1,0 +1,21 @@
+{
+  "name": "import-sort-style-studytube",
+  "version": "1.0.0",
+  "description": "Studytube's import-sort style (Angular, Typescript)",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc -p src",
+    "build:watch": "tsc -p src -w"
+  },
+  "author": "Yuriy Kuzin <yuriy.open@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "10.3.5",
+    "import-sort-style": "5.0.0",
+    "ts-node": "7.0.0",
+    "tslint": "5.10.0",
+    "typescript": "2.9.2"
+  }
+}
