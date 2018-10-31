@@ -13,6 +13,7 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
 
   const isLocalModule = (imported) => (
     [
+      '@env',
       '@app',
       './',
       '../',
@@ -33,6 +34,7 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
   );
 
   return [
+
     // import {...} "@angular/...";
     {
       match: isAngularModule,
@@ -41,7 +43,11 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
     },
     { separator: true },
 
-    // third party and something not expected
+
+    // third party modules
+    // e.g.:
+    //
+    //    import { NgxPageScrollModule } from 'ngx-page-scroll';
     {
       match: and(not(isAngularModule), not(isLocalModule)),
       sort: member(unicode),
@@ -49,7 +55,13 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
     },
     { separator: true },
 
+
     // env, config, routes
+    // e.g.:
+    //
+    //    import { appRoutes } from './routes';
+    //    import { APP_TOKEN } from './config';
+    //    import { environment } from '@env';
     {
       match: and(isConfig, isLocalModule),
       sort: member(unicode),
@@ -57,9 +69,15 @@ export default function(styleApi: IStyleAPI): Array<IStyleItem> {
     },
     { separator: true },
 
+
     // local imports
+    // e.g.:
+    //
+    //    import { AnotherComponent } from '../another/another.component';
+    //    import { SomePipe } from '@app/shared/pipes/some.pipe';
+    //    import { SomeComponent } from './components/some/some.component';
     {
-      match: isLocalModule,
+      match: and (isLocalModule, not(isConfig)),
       sort: member(unicode),
       sortNamedMembers: name(unicode),
     },
