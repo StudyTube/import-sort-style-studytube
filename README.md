@@ -10,6 +10,7 @@ import {...} "@angular/...";
 // third party modules:
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { TranslateModule } from '@ngx-translate/core';
+import 'moment/locale/en.js';
 
 // env, config, routes:
 import { APP_TOKEN } from './config';
@@ -20,4 +21,5 @@ import { environment } from '@env';
 import { AnotherComponent } from '../another/another.component';
 import { SomePipe } from '@app/shared/pipes/some.pipe';
 import { SomeComponent } from './components/some/some.component';
+import './my-lib.js';
 ```
