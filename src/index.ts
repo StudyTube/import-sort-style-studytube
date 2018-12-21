@@ -44,6 +44,8 @@ export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
       sort: member(unicode),
       sortNamedMembers: name(unicode),
     },
+
+    //    import 'moment/locale/en.js';
     {
       match: and(hasNoMember, isInstalledModule(baseFile)),
       sort: member(unicode),
@@ -77,6 +79,8 @@ export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
       sort: member(unicode),
       sortNamedMembers: name(unicode),
     },
+
+    //    import './my-lib.js';
     {
       match: and(hasNoMember, not(isInstalledModule(baseFile))),
       sort: member(unicode),
