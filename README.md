@@ -23,3 +23,19 @@ import { SomePipe } from '@app/shared/pipes/some.pipe';
 import { SomeComponent } from './components/some/some.component';
 import './my-lib.js';
 ```
+
+## install from npm
+
+1. `npm i import-sort-style-studytube -D`
+
+2. Add `.importsortrc` file to the project:
+
+```javascript
+{
+  ".ts, .tsx": {
+    "parser": "typescript",
+    "style": "studytube"
+  }
+}
+```
+
