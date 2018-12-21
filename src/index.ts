@@ -1,6 +1,6 @@
 import { IStyleAPI, IStyleItem } from 'import-sort-style';
 
-export default function(styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
+export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
   const {
     and,
     member,
@@ -8,6 +8,7 @@ export default function(styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
     not,
     unicode,
     isInstalledModule,
+    hasNoMember,
   } = styleApi;
 
   const isAngularModule = (imported) => Boolean(imported.moduleName.match(/^@angular\//));
@@ -39,7 +40,12 @@ export default function(styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
     //
     //    import { NgxPageScrollModule } from 'ngx-page-scroll';
     {
-      match: and(not(isAngularModule), isInstalledModule(baseFile)),
+      match: and(not(isAngularModule), isInstalledModule(baseFile), not(hasNoMember)),
+      sort: member(unicode),
+      sortNamedMembers: name(unicode),
+    },
+    {
+      match: and(hasNoMember, isInstalledModule(baseFile)),
       sort: member(unicode),
       sortNamedMembers: name(unicode),
     },
@@ -67,7 +73,12 @@ export default function(styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
     //    import { SomePipe } from '@app/shared/pipes/some.pipe';
     //    import { SomeComponent } from './components/some/some.component';
     {
-      match: and(not(isConfig), not(isInstalledModule(baseFile))),
+      match: and(not(isConfig), not(isInstalledModule(baseFile)), not(hasNoMember)),
+      sort: member(unicode),
+      sortNamedMembers: name(unicode),
+    },
+    {
+      match: and(hasNoMember, not(isInstalledModule(baseFile))),
       sort: member(unicode),
       sortNamedMembers: name(unicode),
     },
