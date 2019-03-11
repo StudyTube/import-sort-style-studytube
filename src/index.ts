@@ -1,15 +1,46 @@
+import * as path from 'path';
+
 import { IStyleAPI, IStyleItem } from 'import-sort-style';
 
 export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
   const {
     and,
     member,
+    moduleName,
     name,
     not,
     unicode,
     isInstalledModule,
     hasNoMember,
   } = styleApi;
+
+  // inspired by https://github.com/4Catalyzer/import-sort-style-4catalyzer/blob/master/index.js
+  const pathSort = (a, b) => {
+    a = a.split(path.sep);
+    b = b.split(path.sep);
+
+    const maxLength = Math.max(a.length, b.length);
+
+    for (let i = 0; i < maxLength; i += 1) {
+      if (!(i in a)) {
+        return -1;
+      }
+
+      if (!(i in b)) {
+        return 1;
+      }
+
+      if (a[i].toUpperCase() > b[i].toUpperCase()) {
+        return 1;
+      }
+
+      if (a[i].toUpperCase() < b[i].toUpperCase()) {
+        return -1;
+      }
+    }
+
+    return 0;
+  }
 
   const isAngularModule = (imported) => Boolean(imported.moduleName.match(/^@angular\//));
 
@@ -48,7 +79,7 @@ export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
     //    import 'moment/locale/en.js';
     {
       match: and(hasNoMember, isInstalledModule(baseFile)),
-      sort: member(unicode),
+      sort: moduleName(pathSort),
       sortNamedMembers: name(unicode),
     },
     { separator: true },
@@ -83,7 +114,7 @@ export default function (styleApi: IStyleAPI, baseFile): Array<IStyleItem> {
     //    import './my-lib.js';
     {
       match: and(hasNoMember, not(isInstalledModule(baseFile))),
-      sort: member(unicode),
+      sort: moduleName(pathSort),
       sortNamedMembers: name(unicode),
     },
     { separator: true }
